@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bell Beater</title>
+  <meta name="theme-color" content="#0b1226">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Bell Beater</h1>
+    <div class="actions">
+      <button id="btnInstall" hidden>Install</button>
+      <button id="btnLunch">Lunch: <span id="lunchLabel">—</span></button>
+      <button id="btnFullscreen">Fullscreen</button>
+      <button id="btnNotif">Notifications</button>
+      <button id="btnICS">Make Calendar</button>
+      <button id="btnSettings">Settings</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="now card">
+      <div class="period-name" id="periodName">—</div>
+      <div class="big-count" id="countdown">--:--</div>
+      <div class="subline" id="subline">No school right now</div>
+    </section>
+
+    <section class="next card">
+      <div class="row"><span class="label">Next:</span> <span id="nextName">—</span></div>
+      <div class="row"><span class="label">When:</span> <span id="nextTime">—</span></div>
+    </section>
+
+    <section class="today card">
+      <h2>Today</h2>
+      <div class="row small">
+        <label class="check"><input type="checkbox" id="useTemplate"> Use default schedule template for today</label>
+      </div>
+      <div id="todayList" class="list"></div>
+      <div class="muted tiny">Tip: Open Settings to edit custom blocks for weird days. Toggle the switch to apply your custom plan.</div>
+    </section>
+  </main>
+
+  <dialog id="dlgSettings">
+    <form method="dialog" id="formSettings" class="dialog">
+      <h3>Schedule Editor</h3>
+      <p class="muted">You can customize a day's blocks here. Toggle "Use default schedule" on the main screen to revert.</p>
+
+      <div class="tabs">
+        <button data-day="1" class="tab tab-active">Mon</button>
+        <button data-day="2" class="tab">Tue</button>
+        <button data-day="3" class="tab">Wed</button>
+        <button data-day="4" class="tab">Thu</button>
+        <button data-day="5" class="tab">Fri</button>
+      </div>
+
+      <div id="dayEditor"></div>
+
+      <div class="row">
+        <label class="check"><input type="checkbox" id="chime"> Play chime at bell</label>
+        <label class="check"><input type="checkbox" id="passShow" checked> Show passing-time panel</label>
+      </div>
+
+      <menu>
+        <button value="cancel">Cancel</button>
+        <button id="saveSettings" value="default">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <dialog id="dlgLunch">
+    <form method="dialog" id="formLunch" class="dialog">
+      <h3>Select your lunch</h3>
+      <p class="muted">This makes the schedule nicer around split blocks.</p>
+      <label class="row"><input type="radio" name="lunch" value="4A"> 4A</label>
+      <label class="row"><input type="radio" name="lunch" value="4B"> 4B</label>
+      <label class="row"><input type="radio" name="lunch" value="5C"> 5C</label>
+      <menu>
+        <button value="cancel">Cancel</button>
+        <button id="saveLunch" value="default">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
