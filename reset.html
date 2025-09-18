@@ -1,0 +1,34 @@
+
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bell Beater Reset v3.1.2</title>
+<style>body{font:16px system-ui;background:#0a0f1f;color:#e5e7eb;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}.card{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:20px;max-width:520px}button{margin-top:14px;background:#1f2937;color:#e5e7eb;border:1px solid #1e293b;border-radius:10px;padding:10px 12px;cursor:pointer}</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Reset Bell Beater Cache</h1>
+    <p>If your app looks stuck or buttons don't work, click the button below. It will:</p>
+    <ul>
+      <li>Unregister the old Service Worker</li>
+      <li>Delete all Bell Beater caches</li>
+    </ul>
+    <button id="nuke">Nuke cache & unregister</button>
+    <pre id="log"></pre>
+    <p>After it says <b>Done</b>, go back to your site and reload.</p>
+  </div>
+<script>
+(async function(){
+  const log = msg => (document.getElementById('log').textContent += msg + "\n");
+  document.getElementById('nuke').onclick = async () => { 
+    try { 
+      if ('serviceWorker' in navigator) { 
+        const regs = await navigator.serviceWorker.getRegistrations();
+        for (const r of regs) { await r.unregister(); log('Unregistered SW: ' + (r.scope||'')); }
+      }
+      if (window.caches && caches.keys) { const keys = await caches.keys(); for (const k of keys) { await caches.delete(k); log('Deleted cache: ' + k); } }
+      log('Done. Close this tab and reload your app.');
+    } catch (e) { log('Error: ' + e); }
+  };
+})();
+</script>
+</body></html>
